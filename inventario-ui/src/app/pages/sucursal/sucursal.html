@@ -1,7 +1,55 @@
-<h2>Sucursales</h2>
+<div class="grid grid-cols-1 gap-4 m-5">
 
-<ul class="list-disc pl-6">
-  <li *ngFor="let s of sucursales">
-    {{ s.nombre }} - {{ s.direccion }}
-  </li>
-</ul>
+  <div class="w-full">
+    
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      
+      <div class="border-b border-slate-200 bg-blue-700 px-6 py-4">
+        <h3 class="text-lg font-semibold text-white">Listado de Sucursales</h3>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-3 px-6">
+          <button (click)="showModal('create')" class="rounded-md bg-green-50 px-3 py-2.5 text-xs font-medium text-green-600 hover:bg-green-600 hover:text-white transition-all border border-blue-200">
+            Agregar
+          </button>
+      </div>
+            
+        <div class="mx-auto p-6">
+              <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <table class="w-full text-left text-sm text-slate-600">
+                  
+                  <thead class="bg-slate-50 text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                    <tr>
+                      <th class="px-6 py-4">#</th>
+                      <th class="px-6 py-4">Sucursal</th>
+                      <th class="px-6 py-4">Dirección</th>
+                      <th class="px-6 py-4 text-center">Acciones</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="divide-y divide-slate-200" *ngFor="let s of sucursales; let i = index">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                      <td class="px-6 py-4 font-medium text-slate-900">{{ i + 1 }}</td>
+                      <td class="px-6 py-4 italic">{{s.nombre}}</td>
+                      <td class="px-6 py-4">{{s.direccion}}</td>
+                      <td class="px-6 py-4">
+                        <div class="flex justify-center gap-2">
+                          <button (click)="showModal('edit', s)" class="rounded-md bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition-all border border-blue-200">
+                            Editar
+                          </button>
+                          <button (click)="showModal('delete', s)" class="rounded-md bg-rose-50 px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-600 hover:text-white transition-all border border-rose-200">
+                            Eliminar
+                          </button>
+                          <button (click)="showModal('detail', s)" class="rounded-md bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-200 transition-all">
+                            Ver
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -25,4 +25,7 @@ export class SucursalComponent implements OnInit {
     });
   }
 
+  showModal(type:string, data?: Sucursal){
+    console.log({type, data})
+  }
 }
