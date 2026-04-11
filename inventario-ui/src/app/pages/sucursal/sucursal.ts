@@ -21,7 +21,6 @@ export class SucursalComponent implements OnInit {
 
   listar(){
     this.service.getAll().subscribe(resp => {
-      console.log(resp.data);
       this.sucursales = resp.data
     });
   }
