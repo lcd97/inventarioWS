@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-sucursal-table',
+  selector: 'app-producto-table',
   imports: [CommonModule],
-  templateUrl: './sucursal-table.html'
+  templateUrl: './producto-table.html',
 })
 
-export class SucursalTableComponent {
-  @Input() sucursales: any[] = [];
+export class ProductoComponentTable {
+  @Input() productos: any[] = [];
   @Output() onAction = new EventEmitter<{type: string, data?: any}>();
 
-  showModal(type: string, data?: any) {
-    this.onAction.emit({ type, data });
+  showModal(type: string, data?: any){
+    this.onAction.emit({type, data});
   }
 }

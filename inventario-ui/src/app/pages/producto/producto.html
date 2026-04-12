@@ -1,0 +1,28 @@
+<div class="grid grid-cols-1 gap-4 m-5">
+    <div class="w-full">
+        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex justify-end gap-2 pt-3 px-6">
+                <button type="button" (click)="showModal('create')"
+                    class="rounded-md bg-blue-50 px-3 py-2.5 text-xs font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition-all border border-blue-200">
+                    Agregar
+                </button>
+            </div>
+
+            <div class="mx-auto p-6">
+                <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                    <app-producto-table [productos]="productos"
+                        (onAction)="showModal($event.type, $event.data)"></app-producto-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [isOpen]="isModalOpen" [title]="modalType === 'edit' ? 'Editar Producto' :
+                                           modalType === 'create' ? 'Crear Producto' :
+                                           modalType === 'detail' ? 'Detalle Producto' :
+                                           modalType === 'delete' ? 'Eliminar Producto' : ''"
+    (closeEvent)="isModalOpen = false">
+    <app-producto-form [data]="selectedData" [mode]="modalType" (onSave)="handleSave($event)"
+        (onCancel)="isModalOpen = false" [errors]="errors"></app-producto-form>
+</app-modal>

@@ -1,0 +1,100 @@
+<form (submit)="save()" class="space-y-4">
+    @if(mode === 'delete')
+    {
+    <div>
+        <h2 class="block text-sm font-medium text-red-700 text-center mb-4">¿Está seguro que desea eliminar este
+            producto?</h2>
+    </div>
+    }
+
+    <div [appReadonly]="mode">
+
+        <div>
+            <label class="block text-sm font-medium text-slate-700">SKU</label>
+            <input type="text" maxlength="15" name="sku" [(ngModel)]="data.sku" [class.border-red-500]="errors?.sku"
+                class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500">
+
+            @if (errors?.sku) {
+            <span class="text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+                {{ errors.sku }}
+            </span>
+            }
+
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Nombre</label>
+            <input type="text" maxlength="50" name="nombre" [(ngModel)]="data.nombre"
+                [class.border-red-500]="errors?.nombre"
+                class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500">
+
+            @if (errors?.nombre) {
+            <span class="text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+                {{ errors.nombre }}
+            </span>
+            }
+
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Marca</label>
+            <input type="text" maxlength="50" name="marca" [(ngModel)]="data.marca"
+                [class.border-red-500]="errors?.marca"
+                class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500">
+
+            @if (errors?.marca) {
+            <span class="text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+                {{ errors.marca }}
+            </span>
+            }
+
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+            <div>
+                <label class="block text-sm font-medium text-slate-700">Stock</label>
+                <input type="number" name="stock" [(ngModel)]="data.stock" [class.border-red-500]="errors?.stock"
+                    class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500"
+                    [readonly]="mode !== 'create'">
+
+                @if (errors?.stock) {
+                <span class=" text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+                    {{ errors.stock }}
+                </span>
+                }
+            </div>
+
+            <div class="flex items-center justify-between p-3">
+                <span class="flex flex-col">
+                    <span class="text-sm font-semibold text-gray-900">Activo</span>
+                </span>
+
+                <label for="chkActivo" class="relative inline-flex items-center cursor-pointer">
+                    <input id="chkActivo" type="checkbox" [(ngModel)]="data.activo" name="activo" class="sr-only peer">
+                    <div
+                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600">
+                    </div>
+                </label>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="flex justify-end gap-3 pt-4">
+        <button type="button" (click)="cancel()"
+            class="text-slate-500 font-medium px-4 py-2 hover:bg-slate-50 rounded-lg">
+            Cerrar
+        </button>
+        @if(mode != 'detail'){
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">
+            {{
+            mode === 'create' ? 'Crear' :
+            mode === 'edit' ? 'Guardar' :
+            mode === 'delete' ? 'Eliminar' :
+            ''
+            }}
+        </button>
+        }
+    </div>
+</form>
