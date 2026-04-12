@@ -1,0 +1,22 @@
+<form (submit)="save()" class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-slate-700">Nombre de Sucursal</label>
+      <input type="text" name="nombre" [(ngModel)]="data.nombre"
+             class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700">Dirección</label>
+      <textarea name="direccion" [(ngModel)]="data.direccion"
+                class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500"></textarea>
+    </div>
+
+    <div class="flex justify-end gap-3 pt-4">
+        <button type="button" (click)="cancel()" class="text-slate-500 font-medium px-4 py-2 hover:bg-slate-50 rounded-lg">
+            Cancelar
+        </button> 
+         <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">
+        {{ mode === 'edit' ? 'Guardar' : 'Crear' }}
+      </button>
+    </div>
+  </form>
