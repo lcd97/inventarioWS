@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReadonlyDirective } from '../../../../shared/directives/readonly';
 
 @Component({
   selector: 'app-sucursal-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule,
+            FormsModule,
+            ReadonlyDirective],
   templateUrl: './sucursal-form.html'
 })
 export class SucursalFormComponent {

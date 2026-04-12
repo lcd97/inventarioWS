@@ -1,4 +1,7 @@
-<app-modal [isOpen]="isModalOpen" [title]="modalType === 'edit' ? 'Editar Sucursal' : 'Nueva Sucursal'" (closeEvent)="isModalOpen = false">
+<app-modal [isOpen]="isModalOpen" [title]="modalType === 'edit' ? 'Editar Sucursal' :
+                                           modalType === 'create' ? 'Crear Sucursal' :
+                                           modalType === 'detail' ? 'Detalle Sucursal' :
+                                           modalType === 'delete' ? 'Eliminar Sucursal' : ''" (closeEvent)="isModalOpen = false">
   <app-sucursal-form [data]="selectedData" [mode]="modalType" (onSave)="handleSave($event)" (onCancel)="isModalOpen = false"></app-sucursal-form>
 </app-modal>
 
