@@ -1,5 +1,13 @@
 <form (submit)="save()" class="space-y-4">
+    @if(mode === 'delete')
+    {
+      <div>
+        <h2 class="block text-sm font-medium text-red-700 text-center mb-4">¿Está seguro que desea eliminar esta sucursal?</h2>
+      </div>
+    } 
+    
     <div [appReadonly]="mode">
+
        <div>
         <label class="block text-sm font-medium text-slate-700">Código</label>
         <input type="text" name="codigo" [(ngModel)]="data.codigo"

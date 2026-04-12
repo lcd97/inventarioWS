@@ -1,25 +1,29 @@
 <app-modal [isOpen]="isModalOpen" [title]="modalType === 'edit' ? 'Editar Sucursal' :
                                            modalType === 'create' ? 'Crear Sucursal' :
                                            modalType === 'detail' ? 'Detalle Sucursal' :
-                                           modalType === 'delete' ? 'Eliminar Sucursal' : ''" (closeEvent)="isModalOpen = false">
-  <app-sucursal-form [data]="selectedData" [mode]="modalType" (onSave)="handleSave($event)" (onCancel)="isModalOpen = false" [errors]="errors" ></app-sucursal-form>
+                                           modalType === 'delete' ? 'Eliminar Sucursal' : ''"
+  (closeEvent)="isModalOpen = false">
+  <app-sucursal-form [data]="selectedData" [mode]="modalType" (onSave)="handleSave($event)"
+    (onCancel)="isModalOpen = false" [errors]="errors"></app-sucursal-form>
 </app-modal>
 
 <div class="grid grid-cols-1 gap-4 m-5">
   <div class="w-full">
-    
+
     <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       <div class="flex justify-end gap-2 pt-3 px-6">
-          <button type="button" (click)="showModal('create')" class="rounded-md bg-green-50 px-3 py-2.5 text-xs font-medium text-green-600 hover:bg-green-600 hover:text-white transition-all border border-blue-200">
-            Agregar
-          </button>
+        <button type="button" (click)="showModal('create')"
+          class="rounded-md bg-blue-50 px-3 py-2.5 text-xs font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition-all border border-blue-200">
+          Agregar
+        </button>
       </div>
-            
-        <div class="mx-auto p-6">
-          <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-            <app-sucursal-table [sucursales]="sucursales" (onAction)="showModal($event.type, $event.data)"></app-sucursal-table>
-          </div>
+
+      <div class="mx-auto p-6">
+        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          <app-sucursal-table [sucursales]="sucursales"
+            (onAction)="showModal($event.type, $event.data)"></app-sucursal-table>
         </div>
+      </div>
     </div>
   </div>
 </div>
