@@ -60,10 +60,11 @@ public class ProductoServiceImpl implements IProductoService {
 
         producto.setSku(dto.getSku());
         producto.setNombre(dto.getNombre());
-        producto.setMarca(dto.getMarca());
-        producto.setPrecio(dto.getPrecio());
         producto.setActivo(dto.getActivo());
         producto.setStock(dto.getStock());
+
+        if (dto.getMarca() != null)
+            producto.setMarca(dto.getMarca());
 
         Producto updated = repository.save(producto);
 
@@ -85,7 +86,9 @@ public class ProductoServiceImpl implements IProductoService {
     private void normalizarDatos(ProductoDTO dto) {
         dto.setNombre(dto.getNombre().trim().toUpperCase());
         dto.setSku(dto.getSku().trim().toUpperCase());
-        dto.setMarca(dto.getMarca().trim().toUpperCase());
+
+        if (dto.getMarca() != null)
+            dto.setMarca(dto.getMarca().trim().toUpperCase());
     }
 
     private void validarDuplicados(ProductoDTO dto) {

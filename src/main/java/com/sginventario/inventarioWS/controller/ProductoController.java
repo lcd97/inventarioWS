@@ -48,6 +48,6 @@ public class ProductoController {
     public ApiResponse<Void> eliminar(@PathVariable Integer id) {
         service.eliminar(id);
 
-        return new ApiResponse<Void>(false, "Producto eliminado correctamente", null);
+        return new ApiResponse<Void>(true, "Producto eliminado correctamente", null);
     }
 }
