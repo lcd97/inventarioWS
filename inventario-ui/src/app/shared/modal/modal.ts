@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './modal.html'
 })
 export class ModalComponent {
-  @Input() isOpen = false;
+  @Input() isOpen: Boolean = false;
   @Input() title = '';
   @Output() closeEvent = new EventEmitter<void>();
 
