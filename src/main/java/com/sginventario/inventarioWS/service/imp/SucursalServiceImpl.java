@@ -2,6 +2,7 @@ package com.sginventario.inventarioWS.service.imp;
 
 import com.sginventario.inventarioWS.dto.SucursalDTO;
 import com.sginventario.inventarioWS.entity.Sucursal;
+import com.sginventario.inventarioWS.exception.BadRequestException;
 import com.sginventario.inventarioWS.exception.ResourceNotFoundException;
 import com.sginventario.inventarioWS.repository.SucursalRepository;
 import com.sginventario.inventarioWS.service.ISucursalService;
@@ -31,6 +32,9 @@ public class SucursalServiceImpl implements ISucursalService {
 
     @Override
     public SucursalDTO guardar(SucursalDTO dto) {
+        normalizarDatos(dto);
+        validarDuplicados(dto);
+
         Sucursal sucursal = modelMapper.map(dto, Sucursal.class);
         Sucursal saved = repository.save(sucursal);
         return modelMapper.map(saved, SucursalDTO.class);
@@ -47,5 +51,30 @@ public class SucursalServiceImpl implements ISucursalService {
     @Override
     public void eliminar(Integer id) {
         repository.deleteById(id);
+    }
+
+    private void validarDuplicados(SucursalDTO dto) {
+        validarNombreUnico(dto.getNombre());
+        validarCodigoUnico(dto.getCodigo());
+    }
+
+    private void validarNombreUnico(String nombre) {
+        if (repository.existsByNombreIgnoreCase(nombre)) {
+            throw new BadRequestException("El nombre ya se encuentra registrado en el sistema");
+        }
+    }
+
+    private void validarCodigoUnico(String codigo) {
+        if (repository.existsByCodigo(codigo)) {
+            throw new BadRequestException("El código ya se encuentra registrado en el sistema");
+        }
+    }
+
+    private void normalizarDatos(SucursalDTO dto) {
+        dto.setNombre(dto.getNombre().trim().toUpperCase());
+        dto.setCodigo(dto.getCodigo().trim().toUpperCase());
+
+        if (dto.getDireccion() != null)
+            dto.setDireccion(dto.getDireccion().trim());
     }
 }
