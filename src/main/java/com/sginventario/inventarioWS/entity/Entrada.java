@@ -1,16 +1,20 @@
 package com.sginventario.inventarioWS.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,31 +30,29 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Producto {
+public class Entrada {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "El SKU es requerido")
-    @Size(max = 15, message = "El máximo de caracteres del campo es 15")
-    private String sku;
+    @NotBlank(message = "El Código es requerido")
+    @Size(max = 10, message = "El máximo de caracteres del campo es 10")
+    @Column(unique = true)
+    private String codigo;
 
-    @NotBlank(message = "El nombre es requerido")
-    @Size(max = 50, message = "El máximo de caracteres del campo es 50")
-    private String nombre;
-
-    @Size(max = 50, message = "El máximo de caracteres del campo es 50")
-    private String marca;
+    @NotNull(message = "La fecha es requerida")
+    private LocalDate fechaIngreso;
 
     @Column(nullable = false)
     private Boolean activo;
 
-    @NotNull(message = "El stock es requerido")
-    @Min(value = 0, message = "El stock no puede ser negativo")
-    private Integer stock;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sucursal_id")
+    private Sucursal sucursal;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "producto")
-    private List<DetalleEntrada> detalleEntradas;
+    @OneToMany(mappedBy = "entrada", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<DetalleEntrada> detallesEntrada;
+
 }

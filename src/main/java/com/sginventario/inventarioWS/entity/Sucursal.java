@@ -1,5 +1,9 @@
 package com.sginventario.inventarioWS.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +25,7 @@ public class Sucursal {
     private Integer id;
 
     @NotBlank(message = "El código es requerido")
-    @Size(max = 10, message = "El máximo de caracteres del campo nombre es 10")
+    @Size(max = 10, message = "El máximo de caracteres del campo código es 10")
     private String codigo;
 
     @NotBlank(message = "El nombre es requerido")
@@ -29,9 +33,13 @@ public class Sucursal {
     private String nombre;
 
     @NotBlank(message = "La dirección es requerida")
-    @Size(max = 200, message = "El máximo de caracteres del campo nombre es 200")
+    @Size(max = 200, message = "El máximo de caracteres del campo dirección es 200")
     private String direccion;
 
     @Column(nullable = false)
     private Boolean activo;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "sucursal", fetch = FetchType.LAZY)
+    private List<Entrada> entradas;
 }
