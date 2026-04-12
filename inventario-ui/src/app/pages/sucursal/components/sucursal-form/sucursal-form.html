@@ -1,16 +1,63 @@
 <form (submit)="save()" class="space-y-4">
     <div [appReadonly]="mode">
-      <div>
-        <label class="block text-sm font-medium text-slate-700">Nombre de Sucursal</label>
-        <input type="text" name="nombre" [(ngModel)]="data.nombre"
+       <div>
+        <label class="block text-sm font-medium text-slate-700">Código</label>
+        <input type="text" name="codigo" [(ngModel)]="data.codigo"
+              [class.border-red-500]="errors?.codigo"
               class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500">
+      
+      @if (errors?.codigo) {
+        <span class="text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+          {{ errors.codigo }}
+        </span>
+      }
+
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Nombre</label>
+        <input type="text" name="nombre" [(ngModel)]="data.nombre"
+              [class.border-red-500]="errors?.nombre"
+              class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500">
+      
+        @if (errors?.nombre) {
+          <span class="text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+            {{ errors.nombre }}
+          </span>
+        }
+      
       </div>
 
       <div>
         <label class="block text-sm font-medium text-slate-700">Dirección</label>
         <textarea name="direccion" [(ngModel)]="data.direccion"
+                  [class.border-red-500]="errors?.direccion"
                   class="mt-1 w-full rounded-lg border border-slate-300 p-2 outline-hidden focus:ring-2 focus:ring-blue-500"></textarea>
+      
+          @if (errors?.direccion) {
+            <span class="text-xs text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+              {{ errors.direccion }}
+            </span>
+          }
+      
       </div>
+
+       <div class="flex items-center justify-between p-3">
+          <span class="flex flex-col">
+            <span class="text-sm font-semibold text-gray-900">Activo</span>
+          </span>
+          
+          <label for="chkActivo" class="relative inline-flex items-center cursor-pointer">
+            <input 
+              id= "chkActivo"
+              type="checkbox" 
+              [(ngModel)]="data.activo" 
+              name="activo" 
+              class="sr-only peer"
+            >
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+          </label>
+        </div>
     </div>
 
     <div class="flex justify-end gap-3 pt-4">
@@ -27,5 +74,5 @@
             }}
           </button>
         }
-    </div>
+    </div>  
   </form>

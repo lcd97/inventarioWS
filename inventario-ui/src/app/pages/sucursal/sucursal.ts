@@ -29,6 +29,7 @@ export class SucursalComponent implements OnInit {
   isModalOpen: Boolean = false;
   modalType = 'create'; 
   selectedData: any = {};
+  errors: any;
 
   constructor(private service: SucursalService,
               private cdr: ChangeDetectorRef
@@ -46,13 +47,17 @@ export class SucursalComponent implements OnInit {
   }
 
   showModal(type:string, data?: Sucursal){
+    this.errors = {};
+
     this.modalType = type;
-    this.selectedData = data ? { ...data } : { nombre: '', direccion: '' };
+    this.selectedData = data ? { ...data } : { codigo:'', nombre: '', direccion: '', activo: true };
     
     this.isModalOpen = true;
   }
 
   handleSave(data: any) {
+    this.errors={};
+
     if (this.modalType === 'create') {
       this.service.create(data).subscribe({
         next: (resp:ApiResponse<Sucursal>) => {
@@ -62,7 +67,20 @@ export class SucursalComponent implements OnInit {
           }else
             this.alert.error(resp.message);
         },
-        error: (err) => this.alert.error('Error al crear. Consulte al administrador')
+        error: (err) => {
+          const backendError = err?.error;
+
+          if (err?.error?.data && Object.keys(err.error.data).length > 0) {
+            this.errors = err.error.data;
+            this.alert.error('Error al crear el registro. Intente nuevamente o contactese con el administrador');
+          }
+          else if (backendError?.message)
+              this.alert.error('Error al crear el registro: ' + backendError.message);
+          else 
+              this.alert.error('Error inesperado. Contacte al administrador.');
+
+          this.cdr.detectChanges();
+        }
       });
     } else if(this.modalType === 'edit') {
       this.service.update(data.id, data).subscribe({
@@ -92,7 +110,6 @@ export class SucursalComponent implements OnInit {
   }
 
   private finalizarAccion() {
-    console.log("se cierra la modal");
     this.isModalOpen = false;
     this.selectedData = {};
     this.cdr.detectChanges();

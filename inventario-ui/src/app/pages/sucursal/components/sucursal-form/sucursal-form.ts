@@ -14,6 +14,7 @@ import { ReadonlyDirective } from '../../../../shared/directives/readonly';
 export class SucursalFormComponent {
   @Input() data: any = {}; 
   @Input() mode: string = 'create';
+  @Input() errors: any = {};
   @Output() onSave = new EventEmitter<any>();
   @Output() onCancel = new EventEmitter<void>();
 
