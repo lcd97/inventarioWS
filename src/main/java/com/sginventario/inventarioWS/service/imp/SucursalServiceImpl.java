@@ -2,12 +2,12 @@ package com.sginventario.inventarioWS.service.imp;
 
 import com.sginventario.inventarioWS.dto.SucursalDTO;
 import com.sginventario.inventarioWS.entity.Sucursal;
-import com.sginventario.inventarioWS.exception.BadRequestException;
-import com.sginventario.inventarioWS.exception.ResourceNotFoundException;
 import com.sginventario.inventarioWS.repository.SucursalRepository;
 import com.sginventario.inventarioWS.service.ISucursalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import com.sginventario.inventarioWS.exception.*;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,8 +36,36 @@ public class SucursalServiceImpl implements ISucursalService {
         validarDuplicados(dto);
 
         Sucursal sucursal = modelMapper.map(dto, Sucursal.class);
+        sucursal.setActivo(true);
+
         Sucursal saved = repository.save(sucursal);
         return modelMapper.map(saved, SucursalDTO.class);
+    }
+
+    @Override
+    public SucursalDTO actualizar(Integer id, SucursalDTO dto) {
+
+        Sucursal sucursal = obtenerEntidad(id);
+
+        normalizarDatos(dto);
+
+        validarDuplicadosEnEdicion(dto, sucursal);
+                
+        sucursal.setNombre(dto.getNombre());
+        sucursal.setCodigo(dto.getCodigo());
+        sucursal.setDireccion(dto.getDireccion());
+        sucursal.setActivo(dto.getActivo());
+
+        Sucursal updated = repository.save(sucursal);
+
+        return modelMapper.map(updated, SucursalDTO.class);
+    }
+
+    @Override
+    public void eliminar(Integer id) {
+        Sucursal sucursal = obtenerEntidad(id);
+
+        repository.delete(sucursal);
     }
 
     @Override
@@ -48,9 +76,9 @@ public class SucursalServiceImpl implements ISucursalService {
         return modelMapper.map(sucursal, SucursalDTO.class);
     }   
 
-    @Override
-    public void eliminar(Integer id) {
-        repository.deleteById(id);
+    private Sucursal obtenerEntidad(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Sucursal no encontrada"));
     }
 
     private void validarDuplicados(SucursalDTO dto) {
@@ -59,7 +87,7 @@ public class SucursalServiceImpl implements ISucursalService {
     }
 
     private void validarNombreUnico(String nombre) {
-        if (repository.existsByNombreIgnoreCase(nombre)) {
+        if (repository.existsByNombreIgnoreCaseAndActivoTrue(nombre)) {
             throw new BadRequestException("El nombre ya se encuentra registrado en el sistema");
         }
     }
@@ -77,4 +105,36 @@ public class SucursalServiceImpl implements ISucursalService {
         if (dto.getDireccion() != null)
             dto.setDireccion(dto.getDireccion().trim());
     }
+
+    private void validarDuplicadosEnEdicion(SucursalDTO dto, Sucursal sucursal) {
+        validarNombreUnicoEnEdicion(dto.getNombre(), sucursal.getId());
+        validarCodigoUnicoEnEdicion(dto.getCodigo(), sucursal.getId());
+    }
+
+    private void validarNombreUnicoEnEdicion(String nombre, Integer idActual) {
+
+        boolean existe = repository.existsByNombreIgnoreCaseAndActivoTrue(nombre);
+
+        if (existe) {
+            Sucursal existente = repository.findByNombreIgnoreCase(nombre).get();
+
+            if (!existente.getId().equals(idActual)) {
+                throw new BadRequestException("El nombre ya se encuentra registrado en el sistema");
+            }
+        }
+    }
+
+    private void validarCodigoUnicoEnEdicion(String codigo, Integer idActual) {
+
+    boolean existe = repository.existsByCodigo(codigo);
+
+    if (existe) {
+        Sucursal existente = repository.findByCodigo(codigo).get();
+
+        if (!existente.getId().equals(idActual)) {
+            throw new BadRequestException("El código ya se encuentra registrado en el sistema");
+        }
+    }
+}
+
 }

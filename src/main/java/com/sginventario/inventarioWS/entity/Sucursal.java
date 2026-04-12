@@ -25,4 +25,7 @@ public class Sucursal {
     @NotBlank(message="La dirección es requerida")
     @Size(max = 200, message = "El máximo de caracteres del campo nombre es 200")
     private String direccion;
+
+    @Column(nullable = false)
+    private Boolean activo;
 }

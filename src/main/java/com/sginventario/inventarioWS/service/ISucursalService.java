@@ -8,6 +8,8 @@ public interface ISucursalService {
 
     SucursalDTO guardar(SucursalDTO dto);
 
+    SucursalDTO actualizar(Integer id, SucursalDTO dto);
+
     SucursalDTO obtenerPorId(Integer id);
 
     void eliminar(Integer id);

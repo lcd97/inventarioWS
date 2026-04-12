@@ -39,7 +39,7 @@ public class SucursalController {
     public ApiResponse<SucursalDTO> actualizar(@PathVariable Integer id,
                                                @Valid @RequestBody SucursalDTO sucursal) {
         sucursal.setId(id);
-        return new ApiResponse<>(true, "Sucursal actualizada", service.guardar(sucursal));
+        return new ApiResponse<>(true, "Sucursal actualizada", service.actualizar(id, sucursal));
     }
 
     @DeleteMapping("/{id}")
