@@ -1,7 +1,7 @@
 @if (sucursales.length > 0) {
 <div class="overflow-x-auto">
-  <table class="w-full text-left text-sm text-slate-600 p-2">
-    <thead class="bg-blue-50 text-xs font-semibold text-slate-900 uppercase tracking-wider">
+  <table class="w-full min-w-600px text-left text-sm text-slate-600">
+    <thead class="bg-slate-50/50 text-xs font-medium text-slate-500">
       <tr>
         <th class="px-6 py-4">#</th>
         <th class="px-6 py-4">Código</th>
@@ -47,9 +47,8 @@
   </table>
 </div>
 } @else{
-<div class="p-4 rounded-lg bg-amber-100 border border-amber-200" role="alert">
-  <p class="text-amber-800 text-sm font-medium text-center">
-    Atención: No se encontraron sucursales registradas en el sistema.
-  </p>
+<div class="px-4 py-10 text-center">
+  <p class="text-sm font-medium">No hay sucursales agregados.</p>
+  <p class="text-xs text-slate-400">Haga clic en Agregar para ingresar sucursales.</p>
 </div>
 }
