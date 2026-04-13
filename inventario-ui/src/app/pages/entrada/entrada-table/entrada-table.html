@@ -1,0 +1,47 @@
+@if (entradas.length > 0) {
+<div class="overflow-x-auto">
+    <table class="w-full min-w-600px text-left text-sm text-slate-600">
+        <thead class="bg-slate-50/50 text-xs font-medium text-slate-500">
+            <tr>
+                <th class="px-6 py-4">#</th>
+                <th class="px-6 py-4">Código</th>
+                <th class="px-6 py-4">Fecha ingreso</th>
+                <th class="px-6 py-4">Sucursal</th>
+                <th class="px-6 py-4">Cant. Productos</th>
+                <th class="px-6 py-4">Monto</th>
+                <th class="px-6 py-4 text-center">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-slate-200" *ngFor="let s of entradas; let i = index">
+            <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-4 font-medium text-slate-900">{{ i + 1 }}</td>
+                <td class="px-6 py-4">{{s.codigo}}</td>
+                <td class="px-6 py-4 italic">{{ s.fechaIngreso | date:'dd/MM/yyyy' }}</td>
+                <td class="px-6 py-4 italic">{{ s.sucursalNombre }}</td>
+                <td class="px-6 py-4 italic">{{ s.detalles.length }}</td>
+                <td class="px-6 py-4 font-semibold">
+                    {{ calcularTotalEntrada(s) | currency:'USD':'symbol':'1.2-2' }}
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex justify-center gap-2">
+                        <button type="button" (click)="verDetalle(s)"
+                            class="rounded-md bg-green-50 px-3 py-1.5 text-xs font-medium text-green-600 hover:bg-green-600 hover:text-white transition-all border border-green-200">
+                            Ver
+                        </button>
+                        <button type="button" (click)="eliminarEntrada(s.id!)"
+                            class="rounded-md bg-rose-50 px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-600 hover:text-white transition-all border border-rose-200">
+                            Eliminar
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+} @else{
+<div class="px-4 py-10 text-center">
+    <p class="text-sm font-medium">No hay productos agregados.</p>
+    <p class="text-xs text-slate-400">Haga clic en Agregar para ingresar productos.</p>
+</div>
+}

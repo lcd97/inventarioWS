@@ -10,12 +10,48 @@ export class AlertService {
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
-    // Personalización con colores de Tailwind (Emerald y Red)
     customClass: {
       popup: 'rounded-xl border border-gray-100 shadow-2xl',
       title: 'text-sm font-semibold'
     }
   });
+
+  warning(msg: string) {
+  Swal.fire({
+    title: 'Atención',
+    text: msg,
+    icon: 'warning',
+    position: 'center',
+    showConfirmButton: true,
+    confirmButtonText: 'Entendido',
+    confirmButtonColor: '#3b82f6',
+    customClass: {
+      popup: 'rounded-2xl border border-blue-50 shadow-xl',
+      title: 'text-xl font-bold text-slate-800',
+      confirmButton: 'rounded-lg px-6 py-2'
+    }
+  });
+}
+
+async confirm(title: string, text: string): Promise<boolean> {
+  const result = await Swal.fire({
+    title: title,
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#ef4444', // red-500
+    cancelButtonColor: '#64748b',  // slate-500
+    confirmButtonText: 'Sí, confirmar',
+    cancelButtonText: 'Cancelar',
+    customClass: {
+      popup: 'rounded-2xl',
+      confirmButton: 'rounded-lg px-4 py-2',
+      cancelButton: 'rounded-lg px-4 py-2'
+    }
+  });
+
+  return result.isConfirmed;
+}
 
   success(msg: string) {
     this.toast.fire({ 
