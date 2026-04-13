@@ -9,4 +9,6 @@ public interface EntradaRepository extends JpaRepository<Entrada, Integer> {
     boolean existsByCodigo(String codigo);
 
     List<Entrada> findByActivoTrue();
+
+    boolean existsByCodigoAndActivoTrue(String codigo);
 }

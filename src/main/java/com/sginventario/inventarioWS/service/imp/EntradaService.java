@@ -71,12 +71,12 @@ public class EntradaService {
 
         Sucursal sucursal = existeSucursal(dto.getSucursalId());
 
-        if (entradaRepository.existsByCodigo(dto.getCodigo()))
+        if (entradaRepository.existsByCodigoAndActivoTrue(dto.getCodigo().trim().toUpperCase()))
             throw new RuntimeException("El código de entrada ya existe");
 
         Entrada entrada = new Entrada();
 
-        entrada.setCodigo(dto.getCodigo());
+        entrada.setCodigo(dto.getCodigo().trim().toUpperCase());
         entrada.setFechaIngreso(dto.getFechaIngreso());
         entrada.setActivo(true);
         entrada.setSucursal(sucursal);

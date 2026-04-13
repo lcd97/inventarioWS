@@ -29,6 +29,11 @@ public class ProductoController {
         return new ApiResponse<>(true, "Listado", service.listar());
     }
 
+    @GetMapping("/activos")
+    public ApiResponse<List<ProductoDTO>> listarActivos() {
+        return new ApiResponse<>(true, "Listado", service.listarActivos());
+    }
+
     @GetMapping("/{id}")
     public ApiResponse<ProductoDTO> obtener(@PathVariable Integer id) {
         return new ApiResponse<>(true, "Producto encontrado", service.obtenerPorId(id));
@@ -50,4 +55,5 @@ public class ProductoController {
 
         return new ApiResponse<Void>(true, "Producto eliminado correctamente", null);
     }
+
 }

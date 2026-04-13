@@ -133,4 +133,11 @@ public class ProductoServiceImpl implements IProductoService {
                 throw new BadRequestException("El SKU ya se encuentra registrado en el sistema");
         }
     }
+
+    public List<ProductoDTO> listarActivos() {
+        return repository.findByActivoTrue()
+                .stream()
+                .map(s -> modelMapper.map(s, ProductoDTO.class))
+                .collect(Collectors.toList());
+    }
 }

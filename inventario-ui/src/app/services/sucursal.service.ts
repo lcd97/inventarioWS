@@ -17,6 +17,10 @@ export class SucursalService {
   return this.http.get<ApiResponse<Sucursal[]>>(this.apiUrl);
 }
 
+  getActivos(): Observable<ApiResponse<Sucursal[]>> {
+    return this.http.get<ApiResponse<Sucursal[]>>(`${this.apiUrl}/activos`);
+  }
+
   create(data: Sucursal): Observable<ApiResponse<Sucursal>> {
   return this.http.post<ApiResponse<Sucursal>>(this.apiUrl, data);
 }

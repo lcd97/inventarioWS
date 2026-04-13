@@ -85,11 +85,11 @@ agregarProducto() {
 }
 
   cargarCatalogos() {
-    this.productoService.getAll().subscribe(resp => {
+    this.productoService.getActivos().subscribe(resp => {
       this.productos = resp.data;
     })
 
-    this.sucursalService.getAll().subscribe(resp => {
+    this.sucursalService.getActivos().subscribe(resp => {
       this.sucursales = resp.data
     });
   }

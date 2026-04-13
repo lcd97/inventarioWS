@@ -12,17 +12,21 @@ import com.sginventario.inventarioWS.exception.ApiResponse;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/sucursales")
 public class SucursalController {
 
     @Autowired
     private SucursalServiceImpl service;
-    
+
     @GetMapping
     public ApiResponse<List<SucursalDTO>> listar() {
         return new ApiResponse<>(true, "Listado", service.listar());
+    }
+
+    @GetMapping("/activos")
+    public ApiResponse<List<SucursalDTO>> listarActivos() {
+        return new ApiResponse<>(true, "Listado", service.listarActivos());
     }
 
     @GetMapping("/{id}")
@@ -37,7 +41,7 @@ public class SucursalController {
 
     @PutMapping("/{id}")
     public ApiResponse<SucursalDTO> actualizar(@PathVariable Integer id,
-                                               @Valid @RequestBody SucursalDTO sucursal) {
+            @Valid @RequestBody SucursalDTO sucursal) {
         sucursal.setId(id);
         return new ApiResponse<>(true, "Sucursal actualizada", service.actualizar(id, sucursal));
     }

@@ -1,10 +1,11 @@
 package com.sginventario.inventarioWS.repository;
+
 import com.sginventario.inventarioWS.entity.Sucursal;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
 
 public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
     boolean existsByNombre(String nombre);
@@ -14,7 +15,11 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
     boolean existsByNombreIgnoreCase(String nombre);
 
     Optional<Sucursal> findByNombreIgnoreCase(String nombre);
+
     Optional<Sucursal> findByCodigo(String codigo);
 
     boolean existsByNombreIgnoreCaseAndActivoTrue(String nombre);
+
+    List<Sucursal> findByActivoTrue();
+
 }

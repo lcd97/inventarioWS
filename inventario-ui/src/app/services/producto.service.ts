@@ -17,6 +17,10 @@ export class ProductoService{
         return this.http.get<ApiResponse<Producto[]>>(this.apiUrl);
     }
 
+    getActivos(): Observable<ApiResponse<Producto[]>> {
+        return this.http.get<ApiResponse<Producto[]>>(`${this.apiUrl}/activos`);
+    }
+
     create(data: Producto):Observable<ApiResponse<Producto>> {
         return this.http.post<ApiResponse<Producto>>(this.apiUrl, data);
     }

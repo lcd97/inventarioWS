@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import com.sginventario.inventarioWS.exception.*;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +49,7 @@ public class SucursalServiceImpl implements ISucursalService {
         normalizarDatos(dto);
 
         validarDuplicadosEnEdicion(dto, sucursal);
-                
+
         sucursal.setNombre(dto.getNombre());
         sucursal.setCodigo(dto.getCodigo());
         sucursal.setDireccion(dto.getDireccion());
@@ -74,7 +73,7 @@ public class SucursalServiceImpl implements ISucursalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Sucursal no encontrada"));
 
         return modelMapper.map(sucursal, SucursalDTO.class);
-    }   
+    }
 
     private Sucursal obtenerEntidad(Integer id) {
         return repository.findById(id)
@@ -126,15 +125,22 @@ public class SucursalServiceImpl implements ISucursalService {
 
     private void validarCodigoUnicoEnEdicion(String codigo, Integer idActual) {
 
-    boolean existe = repository.existsByCodigo(codigo);
+        boolean existe = repository.existsByCodigo(codigo);
 
-    if (existe) {
-        Sucursal existente = repository.findByCodigo(codigo).get();
+        if (existe) {
+            Sucursal existente = repository.findByCodigo(codigo).get();
 
-        if (!existente.getId().equals(idActual)) {
-            throw new BadRequestException("El código ya se encuentra registrado en el sistema");
+            if (!existente.getId().equals(idActual)) {
+                throw new BadRequestException("El código ya se encuentra registrado en el sistema");
+            }
         }
     }
-}
+
+    public List<SucursalDTO> listarActivos() {
+        return repository.findByActivoTrue()
+                .stream()
+                .map(s -> modelMapper.map(s, SucursalDTO.class))
+                .collect(Collectors.toList());
+    }
 
 }
