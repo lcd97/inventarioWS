@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<div class="flex min-h-screen bg-slate-50">
+    <!-- El Menú -->
+    <app-sidebar></app-sidebar>
+
+    <!-- El Contenido que cambia (ml-64 es el ancho del menú) -->
+    <main class="flex-1 ml-64 p-4">
+        <router-outlet></router-outlet>
+    </main>
+</div>
