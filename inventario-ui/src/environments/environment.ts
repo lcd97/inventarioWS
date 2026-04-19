@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://onrender.com',
+  apiUrl: 'https://api-inventario-ws.onrender.com',
 };
