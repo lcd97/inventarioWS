@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Sucursal } from '../models/sucursal';
 import { ApiResponse } from '../models/apiResponse';
 import { Observable } from 'rxjs/internal/Observable';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SucursalService {
-  private apiUrl = `${environment.apiUrl}/api/sucursales'`;
+  private apiUrl = `${environment.apiUrl}/api/sucursales`;
 
   constructor(private http: HttpClient) {}
 
